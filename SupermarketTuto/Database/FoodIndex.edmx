@@ -1,0 +1,379 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FoodIndex1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BillTbl">
+          <Key>
+            <PropertyRef Name="BillId" />
+          </Key>
+          <Property Name="BillId" Type="int" Nullable="false" />
+          <Property Name="SellerName" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="BillDate" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="TotAmt" Type="int" />
+        </EntityType>
+        <EntityType Name="CategoryTbl">
+          <Key>
+            <PropertyRef Name="Catd" />
+          </Key>
+          <Property Name="Catd" Type="int" Nullable="false" />
+          <Property Name="CatName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CatDesc" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductTbl">
+          <Key>
+            <PropertyRef Name="ProdId" />
+          </Key>
+          <Property Name="ProdId" Type="int" Nullable="false" />
+          <Property Name="ProdName" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="ProdQty" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="ProdPrice" Type="int" Nullable="false" />
+          <Property Name="ProdCat" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PurchaseTbl">
+          <Key>
+            <PropertyRef Name="PurchaseId" />
+            <PropertyRef Name="ProdId" />
+            <PropertyRef Name="Catd" />
+            <PropertyRef Name="BillId" />
+            <PropertyRef Name="SellerId" />
+          </Key>
+          <Property Name="PurchaseId" Type="int" Nullable="false" />
+          <Property Name="ProdId" Type="int" Nullable="false" />
+          <Property Name="Catd" Type="int" Nullable="false" />
+          <Property Name="BillId" Type="int" Nullable="false" />
+          <Property Name="SellerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SellerTbl">
+          <Key>
+            <PropertyRef Name="SellerId" />
+          </Key>
+          <Property Name="SellerId" Type="int" Nullable="false" />
+          <Property Name="SellerName" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="SellerAge" Type="int" Nullable="false" />
+          <Property Name="SellePhone" Type="int" Nullable="false" />
+          <Property Name="SellerPass" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="fk_PurchaseTbl_BillTbl">
+          <End Role="BillTbl" Type="Self.BillTbl" Multiplicity="1" />
+          <End Role="PurchaseTbl" Type="Self.PurchaseTbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BillTbl">
+              <PropertyRef Name="BillId" />
+            </Principal>
+            <Dependent Role="PurchaseTbl">
+              <PropertyRef Name="BillId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_PurchaseTbl_CategoryTbl">
+          <End Role="CategoryTbl" Type="Self.CategoryTbl" Multiplicity="1" />
+          <End Role="PurchaseTbl" Type="Self.PurchaseTbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoryTbl">
+              <PropertyRef Name="Catd" />
+            </Principal>
+            <Dependent Role="PurchaseTbl">
+              <PropertyRef Name="Catd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_PurchaseTbl_ProductTbl">
+          <End Role="ProductTbl" Type="Self.ProductTbl" Multiplicity="1" />
+          <End Role="PurchaseTbl" Type="Self.PurchaseTbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTbl">
+              <PropertyRef Name="ProdId" />
+            </Principal>
+            <Dependent Role="PurchaseTbl">
+              <PropertyRef Name="ProdId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_PurchaseTbl_SellerTbl">
+          <End Role="SellerTbl" Type="Self.SellerTbl" Multiplicity="1" />
+          <End Role="PurchaseTbl" Type="Self.PurchaseTbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SellerTbl">
+              <PropertyRef Name="SellerId" />
+            </Principal>
+            <Dependent Role="PurchaseTbl">
+              <PropertyRef Name="SellerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FoodIndex1ModelStoreContainer">
+          <EntitySet Name="BillTbl" EntityType="Self.BillTbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategoryTbl" EntityType="Self.CategoryTbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductTbl" EntityType="Self.ProductTbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseTbl" EntityType="Self.PurchaseTbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SellerTbl" EntityType="Self.SellerTbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_PurchaseTbl_BillTbl" Association="Self.fk_PurchaseTbl_BillTbl">
+            <End Role="BillTbl" EntitySet="BillTbl" />
+            <End Role="PurchaseTbl" EntitySet="PurchaseTbl" />
+          </AssociationSet>
+          <AssociationSet Name="fk_PurchaseTbl_CategoryTbl" Association="Self.fk_PurchaseTbl_CategoryTbl">
+            <End Role="CategoryTbl" EntitySet="CategoryTbl" />
+            <End Role="PurchaseTbl" EntitySet="PurchaseTbl" />
+          </AssociationSet>
+          <AssociationSet Name="fk_PurchaseTbl_ProductTbl" Association="Self.fk_PurchaseTbl_ProductTbl">
+            <End Role="ProductTbl" EntitySet="ProductTbl" />
+            <End Role="PurchaseTbl" EntitySet="PurchaseTbl" />
+          </AssociationSet>
+          <AssociationSet Name="fk_PurchaseTbl_SellerTbl" Association="Self.fk_PurchaseTbl_SellerTbl">
+            <End Role="SellerTbl" EntitySet="SellerTbl" />
+            <End Role="PurchaseTbl" EntitySet="PurchaseTbl" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FoodIndex1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BillTbl">
+          <Key>
+            <PropertyRef Name="BillId" />
+          </Key>
+          <Property Name="BillId" Type="Int32" Nullable="false" />
+          <Property Name="SellerName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BillDate" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TotAmt" Type="Int32" />
+          <NavigationProperty Name="PurchaseTbls" Relationship="Self.fk_PurchaseTbl_BillTbl" FromRole="BillTbl" ToRole="PurchaseTbl" />
+        </EntityType>
+        <EntityType Name="CategoryTbl">
+          <Key>
+            <PropertyRef Name="Catd" />
+          </Key>
+          <Property Name="Catd" Type="Int32" Nullable="false" />
+          <Property Name="CatName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CatDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PurchaseTbls" Relationship="Self.fk_PurchaseTbl_CategoryTbl" FromRole="CategoryTbl" ToRole="PurchaseTbl" />
+        </EntityType>
+        <EntityType Name="ProductTbl">
+          <Key>
+            <PropertyRef Name="ProdId" />
+          </Key>
+          <Property Name="ProdId" Type="Int32" Nullable="false" />
+          <Property Name="ProdName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProdQty" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProdPrice" Type="Int32" Nullable="false" />
+          <Property Name="ProdCat" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PurchaseTbls" Relationship="Self.fk_PurchaseTbl_ProductTbl" FromRole="ProductTbl" ToRole="PurchaseTbl" />
+        </EntityType>
+        <EntityType Name="PurchaseTbl">
+          <Key>
+            <PropertyRef Name="PurchaseId" />
+            <PropertyRef Name="ProdId" />
+            <PropertyRef Name="Catd" />
+            <PropertyRef Name="BillId" />
+            <PropertyRef Name="SellerId" />
+          </Key>
+          <Property Name="PurchaseId" Type="Int32" Nullable="false" />
+          <Property Name="ProdId" Type="Int32" Nullable="false" />
+          <Property Name="Catd" Type="Int32" Nullable="false" />
+          <Property Name="BillId" Type="Int32" Nullable="false" />
+          <Property Name="SellerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BillTbl" Relationship="Self.fk_PurchaseTbl_BillTbl" FromRole="PurchaseTbl" ToRole="BillTbl" />
+          <NavigationProperty Name="CategoryTbl" Relationship="Self.fk_PurchaseTbl_CategoryTbl" FromRole="PurchaseTbl" ToRole="CategoryTbl" />
+          <NavigationProperty Name="ProductTbl" Relationship="Self.fk_PurchaseTbl_ProductTbl" FromRole="PurchaseTbl" ToRole="ProductTbl" />
+          <NavigationProperty Name="SellerTbl" Relationship="Self.fk_PurchaseTbl_SellerTbl" FromRole="PurchaseTbl" ToRole="SellerTbl" />
+        </EntityType>
+        <EntityType Name="SellerTbl">
+          <Key>
+            <PropertyRef Name="SellerId" />
+          </Key>
+          <Property Name="SellerId" Type="Int32" Nullable="false" />
+          <Property Name="SellerName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SellerAge" Type="Int32" Nullable="false" />
+          <Property Name="SellePhone" Type="Int32" Nullable="false" />
+          <Property Name="SellerPass" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PurchaseTbls" Relationship="Self.fk_PurchaseTbl_SellerTbl" FromRole="SellerTbl" ToRole="PurchaseTbl" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="fk_PurchaseTbl_BillTbl">
+          <End Role="BillTbl" Type="Self.BillTbl" Multiplicity="1" />
+          <End Role="PurchaseTbl" Type="Self.PurchaseTbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BillTbl">
+              <PropertyRef Name="BillId" />
+            </Principal>
+            <Dependent Role="PurchaseTbl">
+              <PropertyRef Name="BillId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_PurchaseTbl_CategoryTbl">
+          <End Role="CategoryTbl" Type="Self.CategoryTbl" Multiplicity="1" />
+          <End Role="PurchaseTbl" Type="Self.PurchaseTbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoryTbl">
+              <PropertyRef Name="Catd" />
+            </Principal>
+            <Dependent Role="PurchaseTbl">
+              <PropertyRef Name="Catd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_PurchaseTbl_ProductTbl">
+          <End Role="ProductTbl" Type="Self.ProductTbl" Multiplicity="1" />
+          <End Role="PurchaseTbl" Type="Self.PurchaseTbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTbl">
+              <PropertyRef Name="ProdId" />
+            </Principal>
+            <Dependent Role="PurchaseTbl">
+              <PropertyRef Name="ProdId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_PurchaseTbl_SellerTbl">
+          <End Role="SellerTbl" Type="Self.SellerTbl" Multiplicity="1" />
+          <End Role="PurchaseTbl" Type="Self.PurchaseTbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SellerTbl">
+              <PropertyRef Name="SellerId" />
+            </Principal>
+            <Dependent Role="PurchaseTbl">
+              <PropertyRef Name="SellerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FoodIndex1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BillTbls" EntityType="Self.BillTbl" />
+          <EntitySet Name="CategoryTbls" EntityType="Self.CategoryTbl" />
+          <EntitySet Name="ProductTbls" EntityType="Self.ProductTbl" />
+          <EntitySet Name="PurchaseTbls" EntityType="Self.PurchaseTbl" />
+          <EntitySet Name="SellerTbls" EntityType="Self.SellerTbl" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="fk_PurchaseTbl_BillTbl" Association="Self.fk_PurchaseTbl_BillTbl">
+            <End Role="BillTbl" EntitySet="BillTbls" />
+            <End Role="PurchaseTbl" EntitySet="PurchaseTbls" />
+          </AssociationSet>
+          <AssociationSet Name="fk_PurchaseTbl_CategoryTbl" Association="Self.fk_PurchaseTbl_CategoryTbl">
+            <End Role="CategoryTbl" EntitySet="CategoryTbls" />
+            <End Role="PurchaseTbl" EntitySet="PurchaseTbls" />
+          </AssociationSet>
+          <AssociationSet Name="fk_PurchaseTbl_ProductTbl" Association="Self.fk_PurchaseTbl_ProductTbl">
+            <End Role="ProductTbl" EntitySet="ProductTbls" />
+            <End Role="PurchaseTbl" EntitySet="PurchaseTbls" />
+          </AssociationSet>
+          <AssociationSet Name="fk_PurchaseTbl_SellerTbl" Association="Self.fk_PurchaseTbl_SellerTbl">
+            <End Role="SellerTbl" EntitySet="SellerTbls" />
+            <End Role="PurchaseTbl" EntitySet="PurchaseTbls" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FoodIndex1ModelStoreContainer" CdmEntityContainer="FoodIndex1Entities">
+          <EntitySetMapping Name="BillTbls">
+            <EntityTypeMapping TypeName="FoodIndex1Model.BillTbl">
+              <MappingFragment StoreEntitySet="BillTbl">
+                <ScalarProperty Name="BillId" ColumnName="BillId" />
+                <ScalarProperty Name="SellerName" ColumnName="SellerName" />
+                <ScalarProperty Name="BillDate" ColumnName="BillDate" />
+                <ScalarProperty Name="TotAmt" ColumnName="TotAmt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CategoryTbls">
+            <EntityTypeMapping TypeName="FoodIndex1Model.CategoryTbl">
+              <MappingFragment StoreEntitySet="CategoryTbl">
+                <ScalarProperty Name="Catd" ColumnName="Catd" />
+                <ScalarProperty Name="CatName" ColumnName="CatName" />
+                <ScalarProperty Name="CatDesc" ColumnName="CatDesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTbls">
+            <EntityTypeMapping TypeName="FoodIndex1Model.ProductTbl">
+              <MappingFragment StoreEntitySet="ProductTbl">
+                <ScalarProperty Name="ProdId" ColumnName="ProdId" />
+                <ScalarProperty Name="ProdName" ColumnName="ProdName" />
+                <ScalarProperty Name="ProdQty" ColumnName="ProdQty" />
+                <ScalarProperty Name="ProdPrice" ColumnName="ProdPrice" />
+                <ScalarProperty Name="ProdCat" ColumnName="ProdCat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseTbls">
+            <EntityTypeMapping TypeName="FoodIndex1Model.PurchaseTbl">
+              <MappingFragment StoreEntitySet="PurchaseTbl">
+                <ScalarProperty Name="PurchaseId" ColumnName="PurchaseId" />
+                <ScalarProperty Name="ProdId" ColumnName="ProdId" />
+                <ScalarProperty Name="Catd" ColumnName="Catd" />
+                <ScalarProperty Name="BillId" ColumnName="BillId" />
+                <ScalarProperty Name="SellerId" ColumnName="SellerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SellerTbls">
+            <EntityTypeMapping TypeName="FoodIndex1Model.SellerTbl">
+              <MappingFragment StoreEntitySet="SellerTbl">
+                <ScalarProperty Name="SellerId" ColumnName="SellerId" />
+                <ScalarProperty Name="SellerName" ColumnName="SellerName" />
+                <ScalarProperty Name="SellerAge" ColumnName="SellerAge" />
+                <ScalarProperty Name="SellePhone" ColumnName="SellePhone" />
+                <ScalarProperty Name="SellerPass" ColumnName="SellerPass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="FoodIndex1Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
